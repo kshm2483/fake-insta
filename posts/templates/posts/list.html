@@ -2,7 +2,9 @@
 
 {% block content %}
 <h1>list</h1>
-{% for post in posts %}
-    {% include 'posts/_post.html' %}
-{% endfor %}
+<div class="d-flex flex-wrap justify-content-center">
+    {% for post in posts %}
+        {% include 'posts/_post.html' %}
+    {% endfor %}
+</div>
 {% endblock %}
