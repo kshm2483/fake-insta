@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>log in</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form log_form %}
+    {% buttons submit="OK" reset="Cancel" %}{% endbuttons %}
+</form>
+{% endblock %}

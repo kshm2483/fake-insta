@@ -1,5 +1,8 @@
 <div class="col-4 my-3">
     <div class="card">
+        <div class="card-header">
+            <h5 class="card-text">{{ post.user }}</h5>
+        </div>
         {% if post.image_set %}
             <div id="post{{ post.pk }}" class="carousel slide carousel-fade" data-ride="carousel">
                 <div class="carousel-inner">
@@ -23,11 +26,13 @@
         {% endif %}
         <div class="card-body">
             <p class="card-text">{{ post.content }}</p>
+            {% if post.user == user %}
             <a href="{% url 'posts:update' post.pk %}" class="btn">update</a>
             <form action="{% url 'posts:delete' post.pk %}" method="POST" style="display: inline;">
                 {% csrf_token %}
                 <input type="submit" value="delete" class="btn">
             </form>
+            {% endif %}
         </div>
     </div>
 </div>
