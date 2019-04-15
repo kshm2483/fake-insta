@@ -1,8 +1,5 @@
 <div class="col-4 my-3">
     <div class="card">
-        <div class="card-header">
-            <h5 class="card-text">{{ post.user }}</h5>
-        </div>
         {% if post.image_set %}
             <div id="post{{ post.pk }}" class="carousel slide carousel-fade" data-ride="carousel">
                 <div class="carousel-inner">
@@ -26,6 +23,19 @@
         {% endif %}
         <div class="card-body">
             <p class="card-text">{{ post.content }}</p>
+            
+            {% for comment in post.comment_set.all %}
+                <div class="d-flex justify-content-between">
+                    <p><b>{{ comment.user }}</b> {{ comment }}</p>
+                {% if comment.user == user %}
+                    <form action="{% url 'posts:delete_comment' post.pk comment.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn"><i class="fas fa-eraser"></i></button>
+                    </form>
+                {% endif %}
+                </div>
+            {% endfor %}
+            
             {% if post.user == user %}
             <a href="{% url 'posts:update' post.pk %}" class="btn">update</a>
             <form action="{% url 'posts:delete' post.pk %}" method="POST" style="display: inline;">
@@ -34,5 +44,6 @@
             </form>
             {% endif %}
         </div>
+        {% include 'posts/_comment.html' %}
     </div>
 </div>
