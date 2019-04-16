@@ -3,7 +3,7 @@
     <form action="{% url 'posts:create_comment' post.pk %}" method="POST">
         {% csrf_token %}
         {{ comment_form }}
-        <input class="btn" type="submit" value="submit">
+        <button class="btn" type="submit"><i class="fas fa-pen"></i></button>
     </form>
     {% else %}
         <a href="{% url 'accounts:login' %}">댓글을 달려면 로그인하세요.</a>
