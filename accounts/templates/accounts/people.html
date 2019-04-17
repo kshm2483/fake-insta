@@ -2,6 +2,14 @@
 
 {% block content %}
 <h1 class="text-center">{{ people.username }}'s Profile</h1>
+{% if user == people %}
+<div class="text-center">
+    <a class="badge badge-pill badge-primary" href="{% url 'accounts:edit_account' %}">정보수정</a>
+    <a class="badge badge-pill badge-primary" href="{% url 'accounts:edit_password' %}">비번변경</a>
+</div>
+<hr>
+{% endif %}
+
 <h3 class="text-center">{{ people.username }}이(가) 작성한 게시글</h3>
 <div class="row">
     {% for post in people.post_set.all|dictsortreversed:"pk" %}

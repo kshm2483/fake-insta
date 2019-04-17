@@ -1,6 +1,28 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 
 {% block content %}
 <h1>accounts</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {% if request.resolver_match.url_name == 'edit_account' %}
+        {% bootstrap_form edit_form %}
+    {% elif request.resolver_match.url_name == 'edit_password' %}
+        {% bootstrap_form password_form %}
+    {% else %}
+    {% endif %}
+    {% buttons submit="OK" reset="Cancel" %}{% endbuttons %}
+</form>
+
+{% if request.resolver_match.url_name == 'edit_account' %}
+<form action="{% url 'accounts:del_account' %}" method="POST" onsubmit="return confirm('real?');">
+    {% csrf_token %}
+    <a class="btn btn-primary" href="{% url 'people' user.username %}">back</a>
+    <input class="btn btn-danger" type="submit" value="회원탈퇴">
+</form>
+{% else %}
+<a class="btn btn-primary" href="{% url 'people' user.username %}">back</a>
+{% endif %}
 
 {% endblock %}
