@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex my-5">
+    <div class="mx-4">
+        <img src="https://scontent-icn1-1.cdninstagram.com/vp/b98e9b58cb4f1d949021e1548a1a74c4/5D42B722/t51.2885-15/e35/c0.135.1080.1080/s150x150/54513008_329765407728647_444160077268788597_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com" alt="img" class="rounded-circle">
+    </div>
+    <div>
+        <h1>#dogsta</h1>
+        <p>게시물 <b>{{ posts | length }}</b></p>
+    </div>    
+</div>
+
+<div class="d-flex flex-wrap justify-content-center">
+    {% for post in posts %}
+        {% include 'posts/_post.html' %}
+    {% endfor %}
+</div>
+{% endblock %}

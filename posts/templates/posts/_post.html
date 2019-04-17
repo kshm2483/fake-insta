@@ -1,5 +1,6 @@
 <div class="col-4 my-3">
     <div class="card">
+        <p class="text-center"><a class="card-link" href="{% url 'people' post.user.username %}">{{ post.user }}</a></p>
         {% if post.image_set %}
             <div id="post{{ post.pk }}" class="carousel slide carousel-fade" data-ride="carousel">
                 <div class="carousel-inner">

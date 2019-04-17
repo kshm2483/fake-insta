@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, authenticate, update_session_auth_hash
 from django.contrib.auth import (login as django_login, logout as django_logout)
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
-from .form import UserChangeCustomForm, ProfileForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from .form import UserChangeCustomForm, UserCreationCustomForm, ProfileForm
 from .models import Profile
 
 # Create your views here.
@@ -12,7 +12,7 @@ def signup(request):
         return redirect('posts:list')
         
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreationCustomForm(request.POST)
         if form.is_valid():
             
             # username = form.cleaned_data.get('username')
@@ -24,7 +24,7 @@ def signup(request):
             django_login(request, form)
             return redirect('posts:list')
     else:
-        form = UserCreationForm()
+        form = UserCreationCustomForm()
     
     context = {
         'sign_form': form
@@ -121,3 +121,13 @@ def edit_profile(request):
         'profile_form': form,
     }
     return render(request, 'accounts/form.html', context)
+    
+@login_required
+def follow(request, user_pk):
+    people = get_object_or_404(get_user_model(), pk=user_pk)
+    # people
+    if request.user in people.followers.all():
+        people.followers.remove(request.user)
+    else:
+        people.followers.add(request.user)
+    return redirect('people', people.username)

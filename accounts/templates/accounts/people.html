@@ -7,6 +7,19 @@
   <div class="container">
     <h1 class="display-4">{{ people.profile.nickname }}</h1>
     <p class="lead">{{ people.profile.introduction }}</p>
+    <hr class="border-white">
+    <p>
+        팔로잉 {{ people.followings.count }}
+        팔로워 {{ people.followers.count }}
+    </p>
+ 
+    {% if user != people %}
+        {% if user in people.followers.all %}
+            <a class="btn btn-outline-primary" href="{% url 'accounts:follow' people.pk %}">unfollow</a>
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'accounts:follow' people.pk %}">follow</a>
+        {% endif %}
+    {% endif %}
   </div>
 </div>
 
