@@ -10,7 +10,8 @@
         {% bootstrap_form edit_form %}
     {% elif request.resolver_match.url_name == 'edit_password' %}
         {% bootstrap_form password_form %}
-    {% else %}
+    {% elif request.resolver_match.url_name == 'edit_profile' %}
+        {% bootstrap_form profile_form %}
     {% endif %}
     {% buttons submit="OK" reset="Cancel" %}{% endbuttons %}
 </form>

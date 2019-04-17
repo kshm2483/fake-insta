@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model, authenticate, update_session_aut
 from django.contrib.auth import (login as django_login, logout as django_logout)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
-from .form import UserChangeCustomForm
+from .form import UserChangeCustomForm, ProfileForm
+from .models import Profile
 
 # Create your views here.
 def signup(request):
@@ -13,10 +14,13 @@ def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form = form.save()
+            
             # username = form.cleaned_data.get('username')
             # raw_password = form.cleaned_data.get('password1')
             # user = authenticate(username=username, password=raw_password)
+            form = form.save()
+            Profile.objects.create(user=form)
+            
             django_login(request, form)
             return redirect('posts:list')
     else:
@@ -101,5 +105,19 @@ def edit_password(request):
     form = PasswordChangeForm(user=request.user)
     context = {
         'password_form': form
+    }
+    return render(request, 'accounts/form.html', context)
+    
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('people', request.user.username)
+    
+    form = ProfileForm(instance=request.user.profile)
+    context = {
+        'profile_form': form,
     }
     return render(request, 'accounts/form.html', context)

@@ -2,9 +2,18 @@
 
 {% block content %}
 <h1 class="text-center">{{ people.username }}'s Profile</h1>
+
+<div class="jumbotron jumbotron-fluid text-center mb-2">
+  <div class="container">
+    <h1 class="display-4">{{ people.profile.nickname }}</h1>
+    <p class="lead">{{ people.profile.introduction }}</p>
+  </div>
+</div>
+
 {% if user == people %}
 <div class="text-center">
     <a class="badge badge-pill badge-primary" href="{% url 'accounts:edit_account' %}">정보수정</a>
+    <a class="badge badge-pill badge-primary" href="{% url 'accounts:edit_profile' %}">프로필 수정</a>
     <a class="badge badge-pill badge-primary" href="{% url 'accounts:edit_password' %}">비번변경</a>
 </div>
 <hr>
