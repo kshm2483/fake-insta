@@ -10,7 +10,7 @@
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link">Hi, {{ user }}</a>
+                <a class="nav-link">Hi, {{ user.username }}</a>
             </li>
         </ul>
         <ul class="navbar-nav">

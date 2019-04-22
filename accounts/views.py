@@ -110,6 +110,7 @@ def edit_password(request):
     
 @login_required
 def edit_profile(request):
+    profile = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid():
